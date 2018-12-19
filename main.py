@@ -6,7 +6,6 @@ Created on Dec 18, 2018
 import firebase_admin
 
 from firebase_admin import credentials
-from firebase_admin import db
 from parser import Parser
 from statistique import Statistique
 
@@ -22,7 +21,7 @@ def initApp():
 if __name__ == '__main__':
     # Must be called before calling any function
     initApp()
-    parser = Parser("/home/firebase/utafiti/processing/data/caritas-50fab-export.json");
+    parser = Parser();
     
     stat = Statistique(parser.getQuestions());
     stat.frequencyTableForQuestions()

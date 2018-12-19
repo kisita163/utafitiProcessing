@@ -1,17 +1,18 @@
 import json
 from question import Question
+import requests
 
 class Parser : 
     
-    def __init__(self,jsonPath):
-        self.jsonPath = jsonPath;
+    def __init__(self):
         self.importJsonFile()
         
         
     
     def importJsonFile(self) : 
-        self.jsonFile   = open(self.jsonPath, "r");
-        jsonString      = self.jsonFile.read();
+        params = (('print', 'pretty'),)
+        response = requests.get('https://caritas-50fab.firebaseio.com/survey.json', params=params)
+        jsonString      = response.text;
         self.result     = json.loads(jsonString);
         
        
@@ -20,14 +21,14 @@ class Parser :
     
         questionsAnswers   = [] 
         
-        for user in self.result['survey'] : 
+        for user in self.result : 
             try:
-                for survey in self.result['survey'][user]:
-                    for question in self.result['survey'][user][survey]["section_2"]:
+                for survey in self.result[user]:
+                    for question in self.result[user][survey]["section_2"]:
                         if question == "name":
                             continue
-                        q = self.result['survey'][user][survey]["section_2"][question]["text"]
-                        a = self.result['survey'][user][survey]["section_2"][question]["choice"]
+                        q = self.result[user][survey]["section_2"][question]["text"]
+                        a = self.result[user][survey]["section_2"][question]["choice"]
                         
                         #print q,a
                         questionsAnswers.append(Question(q,a))
