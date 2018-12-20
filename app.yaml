@@ -1,0 +1,18 @@
+runtime: python27
+api_version: 1
+threadsafe: false
+handlers:
+- url: /.*
+  script: main.my_app
+
+libraries:
+- name: numpy
+  version: "1.6.1"
+- name: matplotlib
+  version: "1.2.0"
+- name: ssl
+  version: latest
+- name: django
+  version: "1.4"
+
+ 
