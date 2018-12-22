@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 from collections import Counter
+import os
 
 class Statistique:
-    def __init__ (self,questions):
-        self.questions = questions;
-        
-    
+       
+    def addQuestions(self,questions):  
+        self.questions = questions
+         
         
     def frequencyTableForQuestion(self,question):
         
@@ -44,13 +45,23 @@ class Statistique:
         for q in questions :
             answersSet,rep = self.frequencyTableForQuestion(q)
             plt.figure(ii)        
-            #plt.subplot(x*100 + 10 + ii)
             patches, texts = plt.pie(rep, shadow=False, startangle=90)
             plt.legend(patches,answersSet, loc="best")
             plt.axis('equal')
             plt.title(q)
-            #plt.tight_layout()
+            plt.tight_layout()
+            plt.savefig('output/'+str(ii)+'.png')
+            print q  + ' ' + str(ii)
             ii = ii + 1 
-        plt.show()    
             
+            
+        return questions
+                   
         
+       
+
+    
+        
+        
+        
+          
