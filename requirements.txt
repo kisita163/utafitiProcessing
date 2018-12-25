@@ -1,0 +1,4 @@
+requests==2.0.1
+sseclient==0.0.6
+Flask
+Redis
