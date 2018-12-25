@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+from __future__ import division
 from collections import Counter
 import os
 
@@ -40,22 +40,31 @@ class Statistique:
                 #print q.getQuestion()
                 
     
-        ii = 1;
         
         for q in questions :
             answersSet,rep = self.frequencyTableForQuestion(q)
-            plt.figure(ii)        
-            patches, texts = plt.pie(rep, shadow=False, startangle=90)
-            plt.legend(patches,answersSet, loc="best")
-            plt.axis('equal')
-            plt.title(q)
-            plt.tight_layout()
-            plt.savefig('output/'+str(ii)+'.png')
-            print q  + ' ' + str(ii)
-            ii = ii + 1 
+            self.printResults(q,answersSet,rep)
             
             
         return questions
+
+    def printResults(self, question, answersSet, rep):
+        
+        numbers=sum(rep)
+        percentages=[(x/numbers)*100 for x in rep]
+
+        print question
+        print "----------------------------------------------------"
+        
+        ii = 0
+
+        for answer in answersSet:
+            print answer + "\t" + "%.2f" %percentages[ii] + " %"
+            ii = ii + 1
+        print ""
+        print ""
+
+
                    
         
        
