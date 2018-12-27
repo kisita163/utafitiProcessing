@@ -1,10 +1,13 @@
+# -*- coding: latin-1 -*-
 from __future__ import division
 import matplotlib
 # Force matplotlib to not use any Xwindows backend.
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import Counter
-import json
+import dominate
+from dominate.tags import *
+from django.utils.encoding import smart_str, smart_unicode
 import os
 
 class Statistique:
@@ -26,6 +29,7 @@ class Statistique:
         for q in self.questions :
             if q.getQuestion() == question :
                 answers.append(q.getAnswer())
+              
         freq = Counter(answers)
         
         for answer in answers:
@@ -37,11 +41,20 @@ class Statistique:
 
 
 
-    def frequencyTableForQuestions(self):
+
+    def createAndSaveSurveyImages(self, index, question, availableAnswers, frequences):
+        patches, texts = plt.pie(frequences, shadow=False, startangle=90)
+        plt.legend(patches, availableAnswers, loc="best")
+        plt.axis('equal')
+        plt.tight_layout()
+        plt.savefig('output/' + str(index) + '.png')
+
+    def frequencyTableForQuestions(self,images=True,html=True,json=False):
         
+        survey={}
         questions = []
         results   = []
-        f= open("output/results.json","w+")
+        
         ii = 1
         
         for q in self.questions :
@@ -52,9 +65,9 @@ class Statistique:
         for q in questions :
             
             answersSet,rep = self.frequencyTableForQuestion(q)
-            self.printResults(q,answersSet,rep)
             percentages  = self.getPercentages(rep)
-            survey={}
+            
+            #self.printResults(q,answersSet,percentages)
             
             percentages  = ["%.2f"%p for p in percentages]
             
@@ -63,32 +76,34 @@ class Statistique:
             
     
             results.append(o)
-
-            patches, texts = plt.pie(rep, shadow=False, startangle=90)
-            plt.legend(patches,answersSet, loc="best")
-            plt.axis('equal')
-            plt.title(q)
-            plt.tight_layout()
-            plt.savefig('output/'+str(ii)+'.png')
+            
+            if images == True :
+                self.createAndSaveSurveyImages(ii, q, answersSet, rep)
             ii = ii + 1 
             
         
         survey['name']='Survey'
         survey['length']=len(questions)
         survey['results']=results
-
-
-        json.dump(survey,f,indent=2)
-        f.close()       
-
-
-    def printResults(self, question, answersSet, rep):
         
-        numbers=sum(rep)
-        percentages=[(x/numbers)*100 for x in rep]
+        if json == True : 
+            f_json= open("output/results.json","w+")
+            json.dump(survey,f_json,indent=2)
+            f_json.close()    
+            
+        
+        if html == True:
+            f_html= open("output/index.html","w+")
+            f_html.write(smart_str(self.getHtmlFromDictionary(survey)))
+            
+            smart_str(self.getHtmlFromDictionary(survey))
+            f_html.close()   
+
+
+    def printResults(self, question, answersSet, percentages):
 
         print question
-        print "----------------------------------------------------"
+        print "-------------------------------------------------------"
         
         ii = 0
 
@@ -97,6 +112,66 @@ class Statistique:
             ii = ii + 1
         print ""
         print ""
+        
+        
+    def getHtmlFromDictionary(self,survey):
+        
+        doc = dominate.document(title='Summary: {}'.format("utafiti"))
+    
+        
+        with doc.head:
+            style(  
+            """table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+            
+            h1 {
+                background-color: powderblue;
+                font-family:courier;
+                text-align: center;
+                height: 100px;
+            }
+            
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }""")
+            meta(charset="UTF-8")
+            
+        with doc:
+            div(id='header').add(h1("Utafiti"))
+            br()
+            br()
+            with div():
+                attr(cls='body')
+                ii = 1
+                for question in survey['results']:
+                    div().add(h2(question['question']))
+                    img(src= str(ii) + '.png', id='logo')
+                    ii = ii + 1
+                    #print question['question']
+                    with table().add(tbody()):               
+                        
+                        for answer in question['answers']:
+                            l = tr()
+                            choice = answer['choice']
+                            score  = answer['score'] + "%"
+                        
+                            l.add(td(choice))
+                            l.add(td(score))
+                            #print answer['choice'] + " " + answer['score']
+                    br()
+                    br()
+                    br()
+        
+        return doc.render()
 
 
     def getPercentages(self,rep):

@@ -9,7 +9,6 @@ from statistique import Statistique
 from sseclient import SSEClient
 import json
 import socket
-import os
 
 URL   = 'https://caritas-50fab.firebaseio.com/survey.json'
 
@@ -51,7 +50,7 @@ def run():
             if msg_data is not None :
                 parser = Parser();
                 stat.addQuestions(parser.getQuestions())
-                questions = stat.frequencyTableForQuestions()
+                stat.frequencyTableForQuestions()
 
 
     except socket.error:

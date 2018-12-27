@@ -1,3 +1,6 @@
 requests==2.0.1
 sseclient==0.0.6
 matplotlib==2.2.3
+dominate==2.3.5
+Django==1.11.17
+
