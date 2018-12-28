@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: utafiti-deployment
+  labels:
+    app: utafiti
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: utafiti
+  template:
+    metadata:
+      labels:
+        app: utafiti
+    spec:
+      volumes:
+      - name: shared-data
+        emptyDir: {}
+      containers:
+      - name: nginx-container
+        image: nginx
+        volumeMounts:
+        - name: shared-data
+          mountPath: /usr/share/nginx/html
+        ports:
+        - containerPort: 80
+      - name: utafiti-container
+        image: gcr.io/caritas-50fab/utafiti-app:v1
+        volumeMounts:
+        - name: shared-data
+          mountPath: /app/output
+ 
