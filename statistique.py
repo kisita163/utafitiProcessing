@@ -143,6 +143,15 @@ class Statistique:
                 height: 100px;
             }
             
+            h2 {
+                background-color: #677cec;
+                font-family:courier;
+                text-align: left;
+                padding: 50px;
+                color: #FFFFFF;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            
             tr:nth-child(even) {
                 background-color: #dddddd;
             }""")
@@ -150,7 +159,7 @@ class Statistique:
             meta(**dct)
             
         with doc:
-            div(id='header').add(h1("Utafiti"))
+            div(id='header')#.add(h1("Utafiti"))
             br()
             br()
             with div():
