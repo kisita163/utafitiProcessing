@@ -93,7 +93,7 @@ class Statistique:
             
         
         if html == True:
-            f_html= open("output/index.html","w+")
+            f_html= open("output/results.html","w+")
             f_html.write(smart_str(self.getHtmlFromDictionary(survey)))
             
             smart_str(self.getHtmlFromDictionary(survey))
