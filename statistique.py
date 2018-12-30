@@ -117,10 +117,6 @@ class Statistique:
     def getHtmlFromDictionary(self,survey):
         
         doc = dominate.document(title='Summary: {}'.format("utafiti"))
-        dct = {
-            'http-equiv': 'refresh',
-            'content': '5'
-        }
         
         with doc.head:
             style(  
@@ -156,7 +152,6 @@ class Statistique:
                 background-color: #dddddd;
             }""")
             meta(charset="UTF-8")
-            meta(**dct)
             
         with doc:
             div(id='header')#.add(h1("Utafiti"))
