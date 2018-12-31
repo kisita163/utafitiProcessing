@@ -19,7 +19,10 @@ class Parser :
         
     def getQuestions(self):
     
-        questionsAnswers   = [] 
+        questionsAnswers   = []
+
+        if self.result is None:
+            return questionsAnswers
         
         for user in self.result : 
             try:

@@ -86,7 +86,7 @@ class GUI(Frame):
         master.maxsize(width=w, height=h)
         self.pack()
         
-        if os.path.isfile('/path/to/file') == True:
+        if os.path.isfile('output/1.png') == True:
             image_path = 'output/1.png'
         else:
             image_path = 'default/index.png'
