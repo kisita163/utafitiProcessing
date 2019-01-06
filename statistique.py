@@ -50,7 +50,7 @@ class Statistique:
         plt.tight_layout()
         plt.savefig('output/' + str(index) + '.png')
 
-    def frequencyTableForQuestions(self,images=True,html=True,json=True):
+    def frequencyTableForQuestions(self,images=True,html=True,json=False):
         
         survey={}
         questions = []
