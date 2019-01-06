@@ -9,6 +9,7 @@ import dominate
 from dominate.tags import *
 from django.utils.encoding import smart_str
 import os
+import json as js
 
 class Statistique:
 
@@ -49,7 +50,7 @@ class Statistique:
         plt.tight_layout()
         plt.savefig('output/' + str(index) + '.png')
 
-    def frequencyTableForQuestions(self,images=True,html=True,json=False):
+    def frequencyTableForQuestions(self,images=True,html=True,json=True):
         
         survey={}
         questions = []
@@ -88,7 +89,7 @@ class Statistique:
         
         if json == True : 
             f_json= open("output/results.json","w+")
-            json.dump(survey,f_json,indent=2)
+            js.dump(survey,f_json,indent=2)
             f_json.close()    
             
         

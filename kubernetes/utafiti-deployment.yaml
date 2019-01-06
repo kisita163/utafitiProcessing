@@ -19,14 +19,14 @@ spec:
         emptyDir: {}
       containers:
       - name: nginx-container
-        image: nginx
+        image: gcr.io/caritas-50fab/utafiti-nginx:v2
         volumeMounts:
         - name: shared-data
-          mountPath: /usr/share/nginx/html
+          mountPath: /usr/share/nginx/www/html
         ports:
         - containerPort: 80
       - name: utafiti-container
-        image: gcr.io/caritas-50fab/utafiti-app:v1
+        image: gcr.io/caritas-50fab/utafiti-app:v6
         volumeMounts:
         - name: shared-data
           mountPath: /app/output
