@@ -49,12 +49,17 @@ def run():
 
             if msg_data is not None :
                 parser = Parser();
+                parser.dropRawData()
                 stat.addQuestions(parser.getQuestions())
                 stat.frequencyTableForQuestions()
 
 
     except socket.error:
-         pass    # this can happen when we close the stream
+        pass    # this can happen when we close the stream
+    
+    except KeyboardInterrupt:
+        print 'Program stopped'
+
         
 
 if __name__ == '__main__':

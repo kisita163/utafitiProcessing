@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from collections import Counter
 import dominate
 from dominate.tags import *
-from django.utils.encoding import smart_str, smart_unicode
+from django.utils.encoding import smart_str
 import os
 
 class Statistique:
