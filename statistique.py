@@ -134,20 +134,18 @@ class Statistique:
                 padding: 8px;
             }
             
-            h1 {
-                background-color: powderblue;
+            h3 {
                 font-family:courier;
-                text-align: center;
-                height: 100px;
+                font-size:15px;
             }
             
             h2 {
                 background-color: #677cec;
                 font-family:courier;
                 text-align: left;
-                padding: 50px;
+                padding: 25px;
+                font-size:20px;
                 color: #FFFFFF;
-                font-family: Arial, Helvetica, sans-serif;
             }
             
             tr:nth-child(even) {
@@ -157,8 +155,6 @@ class Statistique:
             
         with doc:
             div(id='header')#.add(h1("Utafiti"))
-            br()
-            br()
             with div():
                 attr(cls='body')
                 ii = 1
@@ -180,7 +176,7 @@ class Statistique:
                     br()
                     br()
                     br()
-        
+                div().add(h3('Nombre de participants : ' + str(len(self.questions))))
         return doc.render()
 
 
