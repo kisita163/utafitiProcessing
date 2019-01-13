@@ -88,6 +88,9 @@ class Parser :
     def getQuestionsSet(self):
 
         questions   = [] 
+
+        if self.result is None:
+            return questions
         
         for user in self.result : 
             try:
