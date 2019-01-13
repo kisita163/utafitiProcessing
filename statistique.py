@@ -6,6 +6,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import Counter
 import dominate
+import random
 from dominate.tags import *
 from django.utils.encoding import smart_str
 import os
@@ -163,7 +164,7 @@ class Statistique:
                 ii = 1
                 for question in survey['results']:
                     div().add(h2(question['question']))
-                    img(src= str(ii) + '.png', id='logo')
+                    img(src= str(ii) + '.png?dummy='+ str(random.randint(1,101)), id='logo')
                     ii = ii + 1
                     #print question['question']
                     with table().add(tbody()):               
