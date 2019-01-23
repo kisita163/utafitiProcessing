@@ -50,7 +50,7 @@ def run():
             if msg_data is not None :
                 parser = Parser();
                 parser.dropRawData()
-                stat.addQuestions(parser.getQuestions())
+                stat.addQuestions(parser.getQuestions(),parser.getNbOfSurvey())
                 stat.frequencyTableForQuestions()
 
 

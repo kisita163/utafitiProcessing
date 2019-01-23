@@ -10,6 +10,11 @@ class Parser :
     
     def __init__(self):
         self.importJsonFile()
+        self.nbOfSurvey=0
+
+
+    def getNbOfSurvey(self):
+        return self.nbOfSurvey
         
         
     
@@ -88,6 +93,7 @@ class Parser :
     def getQuestionsSet(self):
 
         questions   = [] 
+        nb_survey   = 0
 
         if self.result is None:
             return questions
@@ -95,6 +101,7 @@ class Parser :
         for user in self.result : 
             try:
                 for survey in self.result[user]:
+                    nb_survey = nb_survey + 1
                     for question in self.result[user][survey]["section_2"]:
                         if question == "name":
                             continue
@@ -107,6 +114,9 @@ class Parser :
             except Exception:
                 print "Oops! " + user  + " does not participate in the campaign"
        
+        print "nb_survey = " + str(nb_survey)
+        self.nbOfSurvey = nb_survey
+
         return [x.encode('utf-8') for x in questions]
         
        

@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from collections import Counter
 import dominate
 import random
+import pdfkit
 from dominate.tags import *
 from django.utils.encoding import smart_str
 import os
@@ -18,7 +19,8 @@ class Statistique:
         if not os.path.exists("output"):
             os.makedirs("output")
        
-    def addQuestions(self,questions):  
+    def addQuestions(self,questions, nb_survey):
+        self.numberOfSurvey=nb_survey
         self.questions = questions
          
         
@@ -176,7 +178,7 @@ class Statistique:
                     br()
                     br()
                     br()
-                div().add(h3('Nombre de participants : ' + str(len(self.questions))))
+                div().add(h3('Nombre de participants : ' + str(self.numberOfSurvey)))
         return doc.render()
 
 
