@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 from collections import Counter
 import dominate
 import random
-import pdfkit
 from dominate.tags import *
 from django.utils.encoding import smart_str
 import os
